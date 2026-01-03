@@ -1,0 +1,28 @@
+### Node.js / JavaScript ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+### TypeScript / Build ###
+dist/
+build/
+lib/
+out/
+coverage/
+*.tsbuildinfo
+
+### Expo / React Native ###
+.expo
+.expo-shared
+web-build
+android
+ios
+
+### Environment ###
+.env
+.env.local
+
+### OS ###
+.DS_Store
