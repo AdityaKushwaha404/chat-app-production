@@ -5,6 +5,7 @@ import * as authService from "@/services/authService";
 import { useRouter } from "expo-router";
 import { AuthContextProps, DecodedTokenProps, UserProps } from "@/types";
 import * as Notifications from 'expo-notifications';
+import api from '@/utils/api';
 
 const TOKEN_KEY = "AUTH_TOKEN";
 
@@ -87,10 +88,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					const devToken = await Notifications.getDevicePushTokenAsync();
 					const fcm = (devToken as any)?.data || (devToken as any)?.token;
 					if (fcm) {
-						await fetch(`${(await import('@/constants')).default}/api/users/fcm-token`, {
-							method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-							body: JSON.stringify({ token: fcm })
-						});
+						try {
+							await api.post('/api/users/fcm-token', { token: fcm });
+						} catch (e) {
+							console.warn('Failed to register FCM token', e);
+						}
 					}
 				}
 			} catch (e) {
@@ -111,10 +113,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					const devToken = await Notifications.getDevicePushTokenAsync();
 					const fcm = (devToken as any)?.data || (devToken as any)?.token;
 					if (fcm) {
-						await fetch(`${(await import('@/constants')).default}/api/users/fcm-token`, {
-							method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-							body: JSON.stringify({ token: fcm })
-						});
+						try {
+							await api.post('/api/users/fcm-token', { token: fcm });
+						} catch (e) {
+							console.warn('Failed to register FCM token', e);
+						}
 					}
 				}
 			} catch (e) {

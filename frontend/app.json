@@ -48,6 +48,7 @@
       "reactCompiler": true
     },
     "extra": {
+      "EXPO_PUBLIC_API_URL": "https://chat-app-8e91.onrender.com",
       "API_BASE_URL": "https://chat-app-8e91.onrender.com",
       "router": {},
       "eas": {
