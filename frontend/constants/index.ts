@@ -11,14 +11,14 @@ const EXPO_PUBLIC_API_URL = expoExtra.EXPO_PUBLIC_API_URL || (process.env && (pr
 const ENV_API = (process.env && (process.env as any).API_BASE_URL) || undefined;
 
 // Local development default (your local machine IP and backend port)
-const LOCAL_API = "http://192.168.1.40:3001";
+const LOCAL_API = "http://192.168.1.40:3000";
 
 let API_BASE_URL: string;
 if (EXPO_PUBLIC_API_URL) {
   API_BASE_URL = EXPO_PUBLIC_API_URL as string;
 } else {
   const defaultEnv = (Platform.select({
-    android: "http://10.0.2.2:3001",
+    android: "http://10.0.2.2:3000",
     ios: LOCAL_API,
     default: LOCAL_API,
   }) || LOCAL_API) as string;

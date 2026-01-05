@@ -202,6 +202,18 @@ export async function registerUserEvent(socket: Socket, io: SocketIOServer) {
 
     try {
       const { conversationId, content, attachment, clientId, replyTo } = payload || {};
+      // permissions: onlyAdminCanSend
+      try {
+        const conv: any = await Conversation.findById(conversationId).lean();
+        if (conv && conv.type === "group" && conv.settings && conv.settings.onlyAdminCanSend) {
+          const isAdmin = (conv.admins || []).map((a: any) => a.toString()).includes(currentUserId.toString()) || (conv.createdBy && conv.createdBy.toString() === currentUserId.toString());
+          if (!isAdmin) {
+            const resp = { success: false, msg: "Only admins can send messages" };
+            if (typeof cb === "function") cb(resp);
+            return;
+          }
+        }
+      } catch {}
       const message = await Message.create({ conversationId, senderId: currentUserId, content, attachment, replyTo: replyTo || null } as any);
 
       // update conversation lastMessage

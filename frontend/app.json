@@ -45,7 +45,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     },
     "extra": {
       "EXPO_PUBLIC_API_URL": "https://chat-app-8e91.onrender.com",
@@ -56,7 +56,8 @@
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/09374cfd-ab2b-4afe-82d0-3d184dfcd9b5"
+      "enabled": false,
+      "checkAutomatically": "ON_ERROR_RECOVERY"
     }
   }
 }

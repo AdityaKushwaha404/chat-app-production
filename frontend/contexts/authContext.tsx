@@ -4,7 +4,6 @@ import * as jwtDecode from "jwt-decode";
 import * as authService from "@/services/authService";
 import { useRouter } from "expo-router";
 import { AuthContextProps, DecodedTokenProps, UserProps } from "@/types";
-import * as Notifications from 'expo-notifications';
 import api from '@/utils/api';
 
 const TOKEN_KEY = "AUTH_TOKEN";
@@ -51,6 +50,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		})();
 	}, []);
 
+	// Dynamically import expo-notifications where available (Expo Go doesn't include it)
+	const getNotifications = async () => {
+		try {
+			const mod = await import('expo-notifications');
+			return mod;
+		} catch (e) {
+			console.warn('expo-notifications not available in this environment (Expo Go).');
+			return null;
+		}
+	};
+
 	  const updateToken = async (t: string) => {
 		if (!t) {
 			await AsyncStorage.removeItem(TOKEN_KEY);
@@ -82,16 +92,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			if (!token) throw new Error("No token returned from server");
 			await updateToken(token);
 			try {
-				// Register device for FCM and send token to backend
-				const perm = await Notifications.requestPermissionsAsync();
-				if (perm.status === 'granted') {
-					const devToken = await Notifications.getDevicePushTokenAsync();
-					const fcm = (devToken as any)?.data || (devToken as any)?.token;
-					if (fcm) {
-						try {
-							await api.post('/api/users/fcm-token', { token: fcm });
-						} catch (e) {
-							console.warn('Failed to register FCM token', e);
+				// Register device for FCM and send token to backend (only if expo-notifications is available)
+				const Notifications = await getNotifications();
+				if (Notifications) {
+					const perm = await Notifications.requestPermissionsAsync();
+					if (perm.status === 'granted') {
+						const devToken = await Notifications.getDevicePushTokenAsync();
+						const fcm = (devToken as any)?.data || (devToken as any)?.token;
+						if (fcm) {
+							try {
+								await api.post('/api/users/fcm-token', { token: fcm });
+							} catch (e) {
+								console.warn('Failed to register FCM token', e);
+							}
 						}
 					}
 				}
@@ -108,15 +121,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			if (!token) throw new Error("No token returned from server");
 			await updateToken(token);
 			try {
-				const perm = await Notifications.requestPermissionsAsync();
-				if (perm.status === 'granted') {
-					const devToken = await Notifications.getDevicePushTokenAsync();
-					const fcm = (devToken as any)?.data || (devToken as any)?.token;
-					if (fcm) {
-						try {
-							await api.post('/api/users/fcm-token', { token: fcm });
-						} catch (e) {
-							console.warn('Failed to register FCM token', e);
+				const Notifications = await getNotifications();
+				if (Notifications) {
+					const perm = await Notifications.requestPermissionsAsync();
+					if (perm.status === 'granted') {
+						const devToken = await Notifications.getDevicePushTokenAsync();
+						const fcm = (devToken as any)?.data || (devToken as any)?.token;
+						if (fcm) {
+							try {
+								await api.post('/api/users/fcm-token', { token: fcm });
+							} catch (e) {
+								console.warn('Failed to register FCM token', e);
+							}
 						}
 					}
 				}

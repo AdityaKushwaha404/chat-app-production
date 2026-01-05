@@ -13,12 +13,17 @@ export interface ConversationProps extends Document {
   _id: Types.ObjectId;
   type: "direct" | "group";
   name?: string;
+  description?: string;
   participants: Types.ObjectId[];
   lastMessage?: Types.ObjectId;
   createdBy?: Types.ObjectId;
   avatar?: string;
   admins?: Types.ObjectId[];
   moderators?: Types.ObjectId[];
+  settings?: {
+    onlyAdminCanSend?: boolean;
+    onlyAdminCanEdit?: boolean;
+  };
   createdAt: Date;
   updatedAt: Date;
 }

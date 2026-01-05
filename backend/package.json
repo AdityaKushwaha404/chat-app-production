@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/start.js",
-    "dev": "concurrently \"tsc -w -p tsconfig.json\" \"node --watch dist/start.js\""
+    "dev": "concurrently \"tsc -w -p tsconfig.json\" \"nodemon --watch dist --delay 1 --ext js --exec node dist/start.js\""
   },
   "keywords": [],
   "author": "",
@@ -36,6 +36,7 @@
     "@types/node-cron": "^3.0.11",
     "@types/socket.io": "^3.0.1",
     "concurrently": "^8.2.0",
+    "nodemon": "^3.1.11",
     "typescript": "^5.9.3"
   }
 }

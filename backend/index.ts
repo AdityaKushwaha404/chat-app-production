@@ -6,9 +6,11 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import conversationsRoutes from "./routes/conversations.routes.js";
+import groupsRoutes from "./routes/groups.routes.js";
 import keepAliveRoutes from "./routes/keepAlive.routes.js";
 import { initializeSocket } from "./socket.js";
 import { scheduleKeepAlive } from "./utils/keepAlive.js";
+import messagesRoutes from "./routes/messages.routes.js";
 
 dotenv.config();
 
@@ -173,6 +175,8 @@ app.use('/api/keep-alive', keepAliveRoutes);
 // Mount users and conversations
 app.use('/api/users', usersRoutes);
 app.use('/api/conversations', conversationsRoutes);
+app.use('/api/messages', messagesRoutes);
+app.use('/api/groups', groupsRoutes);
 
 
 

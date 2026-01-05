@@ -9,6 +9,7 @@ const ConversationSchema = new Schema<ConversationProps>(
       required: true,
     },
     name: String,
+    description: { type: String, default: "" },
     participants: [
       {
         type: Schema.Types.ObjectId,
@@ -40,6 +41,10 @@ const ConversationSchema = new Schema<ConversationProps>(
         ref: "User",
       },
     ],
+    settings: {
+      onlyAdminCanSend: { type: Boolean, default: false },
+      onlyAdminCanEdit: { type: Boolean, default: true },
+    },
     createdAt: {
       type: Date,
       default: Date.now,

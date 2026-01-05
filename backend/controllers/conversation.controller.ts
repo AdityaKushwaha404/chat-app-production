@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Conversation from "../modals/Conversation.js";
 import Message from "../modals/Message.js";
+import GroupMember from "../modals/GroupMember.js";
 import mongoose from "mongoose";
 
 export const createConversation = async (req: Request & { user?: any }, res: Response) => {
@@ -29,11 +30,19 @@ export const createConversation = async (req: Request & { user?: any }, res: Res
     const conv = await Conversation.create({
       type: payload.type,
       name: payload.name || (payload.type === "group" ? "New Group" : null),
+      description: payload.description || "",
       participants,
       avatar: payload.avatar || "",
       createdBy: currentUserId || undefined,
       admins: currentUserId ? [currentUserId] : [],
     } as any);
+
+    // create GroupMember entries for groups
+    try {
+      if (payload.type === "group") {
+        await Promise.all(participants.map((uid: any) => GroupMember.updateOne({ conversationId: conv._id, userId: uid }, { $setOnInsert: { conversationId: conv._id, userId: uid } }, { upsert: true })));
+      }
+    } catch {}
 
     return res.json({ success: true, data: conv });
   } catch (err) {
@@ -81,6 +90,8 @@ export const listMyConversations = async (req: Request & { user?: any }, res: Re
       return {
         _id: c._id.toString(),
         type: c.type,
+        description: c.description || "",
+        settings: c.settings || { onlyAdminCanSend: false, onlyAdminCanEdit: true },
         name,
         avatar,
         lastMessage: last,
@@ -129,8 +140,9 @@ export const updateConversation = async (req: Request & { user?: any }, res: Res
     if (conv.type === "group" && !isCreator && !isAdmin) {
       return res.status(403).json({ success: false, msg: "Not allowed" });
     }
-    if (payload.name) conv.name = payload.name;
-    if (payload.avatar) conv.avatar = payload.avatar;
+    if (payload.name !== undefined) conv.name = payload.name;
+    if (payload.avatar !== undefined) conv.avatar = payload.avatar;
+    if ((payload as any).description !== undefined) (conv as any).description = (payload as any).description;
     await conv.save();
     const updated = await Conversation.findById(id).populate({ path: "participants", select: "name avatar email" }).populate({ path: "createdBy", select: "name _id" }).lean();
     return res.json({ success: true, data: updated });

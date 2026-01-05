@@ -55,7 +55,7 @@ const Home = () => {
     try{
       setLoading(true);
       const res = await getMyConversations();
-      const list = Array.isArray(res?.data) ? res.data : [];
+      const list = Array.isArray(res) ? res : Array.isArray(res?.data) ? res.data : [];
       setConversations(list);
       saveConversations(list);
       // Subscribe to conversation rooms for realtime badge updates

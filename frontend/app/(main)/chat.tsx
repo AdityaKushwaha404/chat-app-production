@@ -31,6 +31,7 @@ const ChatScreen = () => {
   const titleParam = params?.name || "Chat";
 
   const [messages, setMessages] = useState<Message[]>([]);
+  const listRef = useRef<FlatList>(null as any);
   const [text, setText] = useState("");
   const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
@@ -85,6 +86,18 @@ const ChatScreen = () => {
               try {
                 sock.emit("conversation:markRead", { conversationId }, () => {});
               } catch {}
+              // after small delay to allow list render, jump to first unread or end
+              setTimeout(() => {
+                try {
+                  const myId = (currentUser as any)?.id || (currentUser as any)?._id;
+                  const idx = (resp.messages || []).findIndex((m: any) => m.senderId && m.senderId !== myId && (!Array.isArray(m.readBy) || !m.readBy.map((x:any)=>x.toString()).includes(myId?.toString?.())));
+                  if (idx >= 0 && listRef.current) {
+                    listRef.current.scrollToIndex({ index: Math.max(0, idx - 1), animated: false });
+                  } else if (listRef.current) {
+                    listRef.current.scrollToEnd({ animated: false });
+                  }
+                } catch {}
+              }, 50);
             }
           });
         }
@@ -463,7 +476,11 @@ const ChatScreen = () => {
                 </Pressable>
             </View>
             {!selectionMode ? (
-              <Pressable onPress={() => { /* future menu */ }} accessibilityRole="button" accessibilityLabel="More options">
+              <Pressable onPress={() => {
+                if (conversation?.type === "group" && conversation?._id) {
+                  router.push(`/(main)/groupInfo?id=${conversation._id}`);
+                }
+              }} accessibilityRole="button" accessibilityLabel="More options">
                 <MaterialIcons name="more-vert" size={24} color="#fff" />
               </Pressable>
             ) : (
@@ -480,7 +497,7 @@ const ChatScreen = () => {
         </View>
 
         <View style={styles.contentArea}>
-          <FlatList data={messages} keyExtractor={(i: any) => i._id || i.clientId} renderItem={renderItem} contentContainerStyle={{ padding: 20, paddingBottom: 16 }} style={{ flex: 1 }} />
+          <FlatList ref={listRef as any} data={messages} keyExtractor={(i: any) => i._id || i.clientId} renderItem={renderItem} contentContainerStyle={{ padding: 20, paddingBottom: 16 }} style={{ flex: 1 }} onContentSizeChange={() => { try { if (listRef.current) listRef.current.scrollToEnd({ animated: true }); } catch {} }} />
 
           {typingUsers.length > 0 && (
             <View style={styles.typingRow}>
