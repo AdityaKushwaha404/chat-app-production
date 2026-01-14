@@ -102,21 +102,27 @@ Files & entry points to inspect
 
 Thank you for checking out the project — feel free to open issues or contribute!
 
+
 Screenshots
-- The project screenshots are available in the `readme_images/` folder. Preview or embed them from the links below:
 
-![Screenshot 1](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.02.jpeg)
+Preview screenshots (click any image to open full size):
 
-![Screenshot 2](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.03.jpeg)
+<table>
+	<tr>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.02.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.02.jpeg" alt="Screenshot 1" width="260"/></a></td>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.03.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.03.jpeg" alt="Screenshot 2" width="260"/></a></td>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.04.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.04.jpeg" alt="Screenshot 3" width="260"/></a></td>
+	</tr>
+	<tr>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.05%20%281%29.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.05%20%281%29.jpeg" alt="Screenshot 4" width="260"/></a></td>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.05.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.05.jpeg" alt="Screenshot 5" width="260"/></a></td>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06%20%281%29.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06%20%281%29.jpeg" alt="Screenshot 6" width="260"/></a></td>
+	</tr>
+	<tr>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06%20%282%29.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06%20%282%29.jpeg" alt="Screenshot 7" width="260"/></a></td>
+		<td align="center"><a href="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06.jpeg"><img src="readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06.jpeg" alt="Screenshot 8" width="260"/></a></td>
+		<td></td>
+	</tr>
+</table>
 
-![Screenshot 3](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.04.jpeg)
-
-![Screenshot 4](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.05%20%281%29.jpeg)
-
-![Screenshot 5](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.05.jpeg)
-
-![Screenshot 6](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06%20%281%29.jpeg)
-
-![Screenshot 7](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06%20%282%29.jpeg)
-
-![Screenshot 8](readme_images/WhatsApp%20Image%202026-01-14%20at%2021.12.06.jpeg)
+*If you want the actual file sizes reduced (to decrease repo size), I can create smaller copies in `readme_images/` and update the links.*
